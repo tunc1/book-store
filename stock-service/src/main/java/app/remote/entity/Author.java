@@ -1,6 +1,6 @@
-package app.remote;
+package app.remote.entity;
 
-public class Genre
+public class Author
 {
     private long id;
     private String name;

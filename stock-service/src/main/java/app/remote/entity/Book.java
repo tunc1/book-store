@@ -1,4 +1,4 @@
-package app.remote;
+package app.remote.entity;
 
 import java.util.Set;
 

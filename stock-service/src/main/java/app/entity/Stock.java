@@ -1,7 +1,7 @@
 package app.entity;
 
-import app.remote.Book;
-import app.remote.Inventory;
+import app.remote.entity.Book;
+import app.remote.entity.Inventory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

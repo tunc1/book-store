@@ -1,9 +1,17 @@
-package app.remote;
+package app.remote.entity;
 
-public class Author
+public class Inventory
 {
     private long id;
-    private String name;
+    private String name,address;
+    public String getAddress()
+    {
+        return address;
+    }
+    public void setAddress(String address)
+    {
+        this.address=address;
+    }
     public long getId()
     {
         return id;

@@ -1,17 +1,9 @@
-package app.remote;
+package app.remote.entity;
 
-public class Inventory
+public class Genre
 {
     private long id;
-    private String name,address;
-    public String getAddress()
-    {
-        return address;
-    }
-    public void setAddress(String address)
-    {
-        this.address=address;
-    }
+    private String name;
     public long getId()
     {
         return id;
