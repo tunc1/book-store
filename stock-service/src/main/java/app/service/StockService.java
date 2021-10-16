@@ -25,7 +25,9 @@ public class StockService
 	public Stock save(Stock stock)
 	{
 		setRemoteObjectIdsForStock(stock);
-		return stockRepository.save(stock);
+		Stock saved=stockRepository.save(stock);
+		setRemoteObjectsForStock(saved);
+		return saved;
 	}
 	public Stock update(Stock stock)
 	{
