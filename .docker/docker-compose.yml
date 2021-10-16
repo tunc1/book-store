@@ -1,0 +1,79 @@
+services:
+  service-discovery:
+    build: ../service-discovery
+    ports:
+    - 8761:8761
+    networks:
+    - network1
+  api-gateway:
+    build: ../api-gateway
+    ports:
+    - 8084:8084
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
+    depends_on:
+    - service-discovery
+    networks:
+    - network1
+  book-service:
+    build: ../book-service
+    ports:
+    - 8081:8081
+    networks:
+    - network1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://book-service-database:5432/book_service
+      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
+    depends_on:
+    - book-service-database
+    - service-discovery
+  book-service-database:
+    image: postgres:14.0
+    networks:
+    - network1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: book_service
+  inventory-service:
+    build: ../inventory-service
+    ports:
+      - 8082:8082
+    networks:
+      - network1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://inventory-service-database:5432/inventory_service
+      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
+    depends_on:
+    - inventory-service-database
+    - service-discovery
+  inventory-service-database:
+    image: postgres:14.0
+    networks:
+      - network1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: inventory_service
+  stock-service:
+    build: ../stock-service
+    ports:
+    - 8083:8083
+    networks:
+    - network1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://stock-service-database:5432/stock_service
+      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
+    depends_on:
+    - stock-service-database
+    - service-discovery
+  stock-service-database:
+    image: postgres:14.0
+    networks:
+    - network1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: stock_service
+networks:
+  network1:
