@@ -1,6 +1,6 @@
 spring:
   application:
-    name: stock-service
+    name: STOCK-SERVICE
   datasource:
     url: jdbc:postgresql://localhost:5432/stock_service
     username: postgres
