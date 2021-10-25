@@ -1,16 +1,12 @@
 services:
-  service-discovery:
-    build: ../service-discovery
-    networks:
-    - network1
   api-gateway:
     build: ../api-gateway
     ports:
     - 8084:8084
     environment:
-      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
-    depends_on:
-    - service-discovery
+      book-service: http://book-service:8081
+      inventory-service: http://inventory-service:8082
+      stock-service: http://stock-service:8083
     networks:
     - network1
   book-service:
@@ -19,10 +15,8 @@ services:
     - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://book-service-database:5432/book_service
-      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
     depends_on:
     - book-service-database
-    - service-discovery
   book-service-database:
     image: postgres:14.0
     networks:
@@ -37,10 +31,8 @@ services:
       - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://inventory-service-database:5432/inventory_service
-      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
     depends_on:
     - inventory-service-database
-    - service-discovery
   inventory-service-database:
     image: postgres:14.0
     networks:
@@ -55,10 +47,10 @@ services:
     - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://stock-service-database:5432/stock_service
-      eureka.client.serviceUrl.defaultZone: http://service-discovery:8761/eureka
+      book-service: http://book-service:8081
+      inventory-service: http://inventory-service:8082
     depends_on:
     - stock-service-database
-    - service-discovery
   stock-service-database:
     image: postgres:14.0
     networks:

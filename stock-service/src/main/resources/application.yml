@@ -16,3 +16,6 @@ server:
 feign:
   circuitbreaker:
     enabled: true
+services:
+  book-service: ${book-service:http://localhost:8081}
+  inventory-service: ${inventory-service:http://localhost:8082}

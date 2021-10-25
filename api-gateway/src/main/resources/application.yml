@@ -7,22 +7,22 @@ spring:
     gateway:
       routes:
       - id: inventory
-        uri: lb://INVENTORY-SERVICE/inventory
+        uri: ${inventory-service:http://localhost:8082}/inventory
         predicates:
         - Path=/inventory/**
       - id: stock
-        uri: lb://STOCK-SERVICE/stock
+        uri: ${stock-service:http://localhost:8083}/stock
         predicates:
         - Path=/stock/**
       - id: book
-        uri: lb://BOOK-SERVICE/book
+        uri: ${book-service:http://localhost:8081}/book
         predicates:
         - Path=/book/**
       - id: author
-        uri: lb://BOOK-SERVICE/author
+        uri: ${book-service:http://localhost:8081}/author
         predicates:
         - Path=/author/**
       - id: genre
-        uri: lb://BOOK-SERVICE/genre
+        uri: ${book-service:http://localhost:8081}/genre
         predicates:
         - Path=/genre/**

@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name="book-service",fallback=BookRepositoryFallback.class)
+@FeignClient(value="book-service",url="${services.book-service}",fallback=BookRepositoryFallback.class)
 public interface BookRepository
 {
     @GetMapping("/book/{id}")
