@@ -1,6 +1,6 @@
 services:
   api-gateway:
-    build: ../api-gateway
+    build: ../../api-gateway
     ports:
     - 8084:8084
     environment:
@@ -10,7 +10,7 @@ services:
     networks:
     - network1
   book-service:
-    build: ../book-service
+    build: ../../book-service
     networks:
     - network1
     environment:
@@ -26,7 +26,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: book_service
   inventory-service:
-    build: ../inventory-service
+    build: ../../inventory-service
     networks:
       - network1
     environment:
@@ -42,7 +42,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: inventory_service
   stock-service:
-    build: ../stock-service
+    build: ../../stock-service
     networks:
     - network1
     environment:
