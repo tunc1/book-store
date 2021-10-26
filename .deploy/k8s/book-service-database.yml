@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-service-database
+  labels:
+    app: book-service-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-service-database
+  template:
+    metadata:
+      labels:
+        app: book-service-database
+    spec:
+      containers:
+      - name: book-service-database
+        image: postgres:14.0
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: book_service
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-service-database
+spec:
+  selector:
+    app: book-service-database
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

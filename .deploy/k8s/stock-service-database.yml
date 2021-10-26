@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-service-database
+  labels:
+    app: stock-service-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-service-database
+  template:
+    metadata:
+      labels:
+        app: stock-service-database
+    spec:
+      containers:
+      - name: stock-service-database
+        image: postgres:14.0
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: stock_service
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-service-database
+spec:
+  selector:
+    app: stock-service-database
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

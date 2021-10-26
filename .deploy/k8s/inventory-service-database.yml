@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service-database
+  labels:
+    app: inventory-service-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service-database
+  template:
+    metadata:
+      labels:
+        app: inventory-service-database
+    spec:
+      containers:
+      - name: inventory-service-database
+        image: postgres:14.0
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: inventory_service
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service-database
+spec:
+  selector:
+    app: inventory-service-database
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
