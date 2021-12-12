@@ -1,12 +1,17 @@
 package app.service;
 
+import app.criteria.BookCriteria;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import app.entity.Book;
 import app.repository.BookRepository;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.Predicate;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class BookService
@@ -32,20 +37,23 @@ public class BookService
 	{
 		return bookRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 	}
-	public Page<Book> findAll(Pageable pageable)
+	public Specification<Book> createSpecification(BookCriteria criteria)
 	{
-		return bookRepository.findAll(pageable);
+		return (root,query,criteriaBuilder)->
+		{
+			List<Predicate> list=new LinkedList<>();
+			if(criteria.getAuthor()!=0)
+				list.add(criteriaBuilder.equal(root.get("author").get("id"),criteria.getAuthor()));
+			if(criteria.getGenre()!=0)
+				list.add(criteriaBuilder.equal(root.join("genres").get("id"),criteria.getGenre()));
+			if(criteria.getName()!=null)
+				list.add(criteriaBuilder.like(root.get("name"),"%"+criteria.getName()+"%"));
+			return criteriaBuilder.and(list.toArray(Predicate[]::new));
+		};
 	}
-	public Page<Book> findByAuthorId(Pageable pageable,long authorId)
+	public Page<Book> findAll(BookCriteria criteria,Pageable pageable)
 	{
-		return bookRepository.findByAuthorId(pageable,authorId);
-	}
-	public Page<Book> findByGenresId(Pageable pageable,long genreId)
-	{
-		return bookRepository.findByGenresId(pageable,genreId);
-	}
-	public Page<Book> findByNameContainingIgnoreCase(Pageable pageable,String name)
-	{
-		return bookRepository.findByNameContainingIgnoreCase(pageable,name);
+		Specification<Book> specification=createSpecification(criteria);
+		return bookRepository.findAll(specification,pageable);
 	}
 }

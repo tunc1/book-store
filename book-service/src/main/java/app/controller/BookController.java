@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.criteria.BookCriteria;
 import app.entity.Book;
 import app.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -36,29 +37,14 @@ public class BookController
 		return bookService.findById(id);
 	}
 	@GetMapping
-	public Page<Book> findAll(Pageable pageable)
+	public Page<Book> findAll(Pageable pageable,BookCriteria criteria)
 	{
-		return bookService.findAll(pageable);
+		return bookService.findAll(criteria,pageable);
 	}
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code=HttpStatus.NO_CONTENT)
 	public void deleteById(@PathVariable Long id)
 	{
 		bookService.deleteById(id);
-	}
-	@GetMapping(params="authorId")
-	public Page<Book> findByAuthorId(Pageable pageable,long authorId)
-	{
-		return bookService.findByAuthorId(pageable,authorId);
-	}
-	@GetMapping(params="genreId")
-	public Page<Book> findByGenresId(Pageable pageable,long genreId)
-	{
-		return bookService.findByGenresId(pageable,genreId);
-	}
-	@GetMapping(params="name")
-	public Page<Book> findByNameContainingIgnoreCase(Pageable pageable,String name)
-	{
-		return bookService.findByNameContainingIgnoreCase(pageable,name);
 	}
 }
