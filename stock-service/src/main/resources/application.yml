@@ -11,6 +11,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 server:
   port: 8083
 feign:
@@ -19,3 +24,5 @@ feign:
 services:
   book-service: ${book-service:http://localhost:8081}
   inventory-service: ${inventory-service:http://localhost:8082}
+mq:
+  queue: queue

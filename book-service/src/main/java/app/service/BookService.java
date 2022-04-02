@@ -1,6 +1,8 @@
 package app.service;
 
 import app.criteria.BookCriteria;
+import app.mq.Message;
+import app.mq.Sender;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
@@ -17,9 +19,11 @@ import java.util.List;
 public class BookService
 {
 	private BookRepository bookRepository;
-	public BookService(BookRepository bookRepository)
+	private Sender sender;
+	public BookService(BookRepository bookRepository,Sender sender)
 	{
 		this.bookRepository=bookRepository;
+		this.sender=sender;
 	}
 	public Book save(Book book)
 	{
@@ -32,6 +36,7 @@ public class BookService
 	public void deleteById(Long id)
 	{
 		bookRepository.deleteById(id);
+		sender.send(new Message(Message.BOOK,id));
 	}
 	public Book findById(Long id)
 	{

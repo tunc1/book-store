@@ -6,3 +6,4 @@ data:
   book-service: http://book-service:8081
   inventory-service: http://inventory-service:8082
   stock-service: http://stock-service:8083
+  queue-name: queue

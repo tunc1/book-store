@@ -1,5 +1,7 @@
 package app.service;
 
+import app.mq.Message;
+import app.mq.Sender;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
@@ -12,9 +14,11 @@ import javax.persistence.EntityNotFoundException;
 public class InventoryService
 {
 	private InventoryRepository inventoryRepository;
-	public InventoryService(InventoryRepository inventoryRepository)
+	private Sender sender;
+	public InventoryService(InventoryRepository inventoryRepository,Sender sender)
 	{
 		this.inventoryRepository=inventoryRepository;
+		this.sender=sender;
 	}
 	public Inventory save(Inventory inventory)
 	{
@@ -27,6 +31,7 @@ public class InventoryService
 	public void deleteById(Long id)
 	{
 		inventoryRepository.deleteById(id);
+		sender.send(new Message(Message.INVENTORY,id));
 	}
 	public Inventory findById(Long id)
 	{

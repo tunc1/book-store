@@ -25,8 +25,8 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: database
-              key: password
+              name: secrets
+              key: database-password
 ---
 apiVersion: v1
 kind: Service

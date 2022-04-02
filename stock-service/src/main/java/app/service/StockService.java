@@ -58,6 +58,14 @@ public class StockService
 	{
 		return setRemoteObjectsForStocks(stockRepository.findByInventoryId(pageable,inventoryId));
 	}
+	public void deleteByInventoryId(long inventoryId)
+	{
+		stockRepository.deleteByInventoryId(inventoryId);
+	}
+	public void deleteByBookId(long bookId)
+	{
+		stockRepository.deleteByBookId(bookId);
+	}
 	private void setRemoteObjectIdsForStock(Stock stock)
 	{
 		stock.setBookId(stock.getBook().getId());

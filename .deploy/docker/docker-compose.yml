@@ -1,4 +1,11 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3.9.14-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - network1
   api-gateway:
     build: ../../api-gateway
     ports:
@@ -15,6 +22,7 @@ services:
     - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://book-service-database:5432/book_service
+      SPRING_RABBITMQ_HOST: rabbitmq
     depends_on:
     - book-service-database
   book-service-database:
@@ -31,6 +39,7 @@ services:
       - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://inventory-service-database:5432/inventory_service
+      SPRING_RABBITMQ_HOST: rabbitmq
     depends_on:
     - inventory-service-database
   inventory-service-database:
@@ -47,6 +56,7 @@ services:
     - network1
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://stock-service-database:5432/stock_service
+      SPRING_RABBITMQ_HOST: rabbitmq
       book-service: http://book-service:8081
       inventory-service: http://inventory-service:8082
     depends_on:
