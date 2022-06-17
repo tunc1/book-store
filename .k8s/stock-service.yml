@@ -30,22 +30,22 @@ spec:
         - name: config-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: config-service
         - name: book-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: book-service
         - name: inventory-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: inventory-service
         - name: MQ_QUEUE
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: queue-name
         - name: SPRING_RABBITMQ_HOST
           value: rabbitmq

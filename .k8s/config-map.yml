@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configMap
+  name: config-map
 data:
   book-service: http://book-service:8081
   inventory-service: http://inventory-service:8082

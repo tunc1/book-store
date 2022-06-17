@@ -23,17 +23,17 @@ spec:
         - name: book-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: book-service
         - name: inventory-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: inventory-service
         - name: stock-service
           valueFrom:
             configMapKeyRef:
-              name: configMap
+              name: config-map
               key: stock-service
 ---
 apiVersion: v1
