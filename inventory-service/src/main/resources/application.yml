@@ -22,3 +22,8 @@ server:
   port: 8082
 mq:
   queue: queue
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

@@ -27,3 +27,8 @@ services:
   inventory-service: ${inventory-service:http://localhost:8082}
 mq:
   queue: queue
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
