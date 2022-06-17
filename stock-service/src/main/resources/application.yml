@@ -18,6 +18,7 @@ spring:
     password: guest
   config:
     import: configserver:${config-service:http://localhost:8888}
+server:
   port: 8083
 feign:
   circuitbreaker:
