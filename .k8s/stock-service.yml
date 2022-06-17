@@ -27,20 +27,25 @@ spec:
             secretKeyRef:
               name: secrets
               key: database-password
+        - name: config-service
+          valueFrom:
+            configMapKeyRef:
+              name: configMap
+              key: config-service
         - name: book-service
           valueFrom:
             configMapKeyRef:
-              name: url
+              name: configMap
               key: book-service
         - name: inventory-service
           valueFrom:
             configMapKeyRef:
-              name: url
+              name: configMap
               key: inventory-service
         - name: MQ_QUEUE
           valueFrom:
             configMapKeyRef:
-              name: url
+              name: configMap
               key: queue-name
         - name: SPRING_RABBITMQ_HOST
           value: rabbitmq

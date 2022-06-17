@@ -16,6 +16,8 @@ spring:
     port: 5672
     username: guest
     password: guest
+  config:
+    import: configserver:${config-service:http://localhost:8888}
 server:
   port: 8082
 mq:

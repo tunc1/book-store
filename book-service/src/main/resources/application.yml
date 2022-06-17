@@ -11,6 +11,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
+  config:
+    import: configserver:${config-service:http://localhost:8888}
   rabbitmq:
     host: localhost
     port: 5672

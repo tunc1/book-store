@@ -30,7 +30,7 @@ spec:
         - name: MQ_QUEUE
           valueFrom:
             configMapKeyRef:
-              name: url
+              name: configMap
               key: queue-name
         - name: SPRING_RABBITMQ_HOST
           value: rabbitmq
@@ -44,6 +44,11 @@ spec:
             secretKeyRef:
               name: secrets
               key: mq-password
+        - name: config-service
+          valueFrom:
+            configMapKeyRef:
+              name: configMap
+              key: config-service
 ---
 apiVersion: v1
 kind: Service
