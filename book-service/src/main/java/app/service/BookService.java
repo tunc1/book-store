@@ -3,6 +3,10 @@ package app.service;
 import app.criteria.BookCriteria;
 import app.mq.Message;
 import app.mq.Sender;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
@@ -16,8 +20,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@RefreshScope
 public class BookService
 {
+	@Value("${log.message.deleted}")
+	private String logMessageDeleted;
+	private static Logger logger=LoggerFactory.getLogger(BookService.class);
 	private BookRepository bookRepository;
 	private Sender sender;
 	public BookService(BookRepository bookRepository,Sender sender)
@@ -36,6 +44,7 @@ public class BookService
 	public void deleteById(Long id)
 	{
 		bookRepository.deleteById(id);
+		logger.info(logMessageDeleted,"book",id);
 		sender.send(new Message(Message.BOOK,id));
 	}
 	public Book findById(Long id)

@@ -2,6 +2,10 @@ package app.service;
 
 import app.remote.repository.BookRepository;
 import app.remote.repository.InventoryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
@@ -11,8 +15,14 @@ import app.repository.StockRepository;
 import javax.persistence.EntityNotFoundException;
 
 @Service
+@RefreshScope
 public class StockService
 {
+	@Value("${log.message.deletedByInventoryId}")
+	private String logMessageDeletedByInventoryId;
+	@Value("${log.message.deletedByBookId}")
+	private String logMessageDeletedByBookId;
+	private static Logger logger=LoggerFactory.getLogger(StockService.class);
 	private StockRepository stockRepository;
 	private BookRepository bookRepository;
 	private InventoryRepository inventoryRepository;
@@ -61,10 +71,12 @@ public class StockService
 	public void deleteByInventoryId(long inventoryId)
 	{
 		stockRepository.deleteByInventoryId(inventoryId);
+		logger.info(logMessageDeletedByInventoryId,inventoryId);
 	}
 	public void deleteByBookId(long bookId)
 	{
 		stockRepository.deleteByBookId(bookId);
+		logger.info(logMessageDeletedByBookId,bookId);
 	}
 	private void setRemoteObjectIdsForStock(Stock stock)
 	{
