@@ -17,6 +17,7 @@ spec:
       containers:
       - name: inventory-service
         image: inventory-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8082
         env:

@@ -17,6 +17,7 @@ spec:
       containers:
       - name: book-service
         image: book-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8081
         env:

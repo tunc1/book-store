@@ -17,6 +17,7 @@ spec:
       containers:
       - name: stock-service
         image: stock-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8083
         env:

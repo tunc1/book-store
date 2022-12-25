@@ -17,6 +17,7 @@ spec:
       containers:
       - name: config-service
         image: config-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8888
 ---
