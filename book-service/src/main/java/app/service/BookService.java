@@ -14,8 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import app.entity.Book;
 import app.repository.BookRepository;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.Predicate;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.Predicate;
 import java.util.LinkedList;
 import java.util.List;
 

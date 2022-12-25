@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import app.entity.Stock;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface StockRepository extends JpaRepository<Stock,Long>
 {

@@ -4,7 +4,7 @@ import app.remote.entity.Book;
 import app.remote.entity.Inventory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"bookId","inventoryId"}))
